@@ -1,0 +1,21 @@
+Package: mainsequenceR
+Title: R Client for MainSequence Python SDK
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Your", "Name", email = "you@example.com", role = c("aut", "cre"))
+)
+Description: Thin R wrapper around the 'mainsequence' Python client,
+    using 'reticulate'. All authentication and HTTP configuration are
+    handled by the Python package and environment variables.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends:
+    R (>= 4.0)
+Imports:
+    reticulate,
+    cli
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

@@ -1,0 +1,13 @@
+.Rhistory
+.RData
+.Rproj.user
+.Ruserdata
+.Rproj
+.Rbuildignore
+.DS_Store
+.Renviron
+.Rprofile
+inst/doc
+# Generated documentation or checks
+*.Rcheck/
+*.tar.gz
