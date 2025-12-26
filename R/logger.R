@@ -6,9 +6,15 @@ ms_py_logger <- function() {
     return(.ms_py_logger)
   }
 
-  logconf <- ms_py_logconf(convert = FALSE)
-  .ms_py_logger <<- logconf$logger
-  .ms_py_logger
+  out <- tryCatch({
+    logconf <- ms_py_logconf(convert = FALSE)
+    .ms_py_logger <<- logconf$logger
+    .ms_py_logger
+  }, error = function(e) NULL )
+    stop("Failed to initialize MainSequence logger: ", e$message)
+  
+  .ms_py_logger <<- out
+  out
 }
 
 #' Create a MainSequence logger bound to a sub-application

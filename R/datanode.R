@@ -98,3 +98,45 @@ ms_data_node_last_observation <- function(
 
   reticulate::py_to_r(py_df)
 }
+
+#' Get data between dates from a node identifier
+#'
+#' Calls Python SDK:
+#'   DataNodeStorage.get_data_between_dates_from_node_identifier(...)
+#'
+#' @param node_identifier character node identifier
+#' @param start,end optional date/time (POSIXct/Date/character). Interpreted as UTC.
+#' @param ids optional character vector of unique identifiers
+#' @param columns optional character vector of columns to fetch
+#' @param as "data.frame" (default) or "pandas"
+#' @export
+ms_data_node_read_by_identifier <- function(
+  node_identifier,
+  start = NULL,
+  end = NULL,
+  ids = NULL,
+  columns = NULL,
+  as = c("data.frame", "pandas")
+) {
+  as <- match.arg(as)
+
+  # Convert to UTC POSIXct if provided
+  if (!is.null(start)) start <- as.POSIXct(start, tz = "UTC")
+  if (!is.null(end))   end   <- as.POSIXct(end,   tz = "UTC")
+
+  models <- ms_py_tdag(convert = FALSE)
+  DataNodeStorage <- models$DataNodeStorage
+
+  py_df <- DataNodeStorage$get_data_between_dates_from_node_identifier(
+    node_identifier = node_identifier,
+    start_date = start,
+    end_date = end,
+    great_or_equal = TRUE,
+    less_or_equal  = TRUE,
+    unique_identifier_list = if (is.null(ids)) NULL else as.list(ids),
+    columns = if (is.null(columns)) NULL else as.list(columns)
+  )
+
+  if (as == "pandas") return(py_df)
+  reticulate::py_to_r(py_df)
+}

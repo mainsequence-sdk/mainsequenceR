@@ -159,6 +159,6 @@ ms_asset_register_custom <- function(..., timeout = NULL) {
   vam <- ms_py_vam(convert = FALSE)
   Asset <- vam$Asset
   kwargs <- list(...)
-  kwargs$timeout <- timeout
+  kwargss$timeout <- timeout
   do.call(Asset$get_or_register_custom_asset, kwargs)
 }
